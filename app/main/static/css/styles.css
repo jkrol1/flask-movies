@@ -1,0 +1,78 @@
+.header {
+  background-color: black;
+}
+
+.navbar-brand,
+.nav-link {
+  color: var(--yellow);
+  font-weight: 600;
+  transition: 0.15s;
+  font-size: 1.7rem;
+}
+
+.nav-link {
+  font-size: 1.1rem;
+}
+
+.navbar-brand:hover,
+.nav-link:hover {
+  color: var(--yellow);
+}
+
+.navbar-brand:hover {
+  transform: translateY(-0.15rem);
+}
+
+.brand-name {
+  margin-right: 0.5rem;
+}
+
+.fa-film {
+  font-size: 1.5rem;
+}
+
+.fa-bars {
+  color: var(--yellow);
+}
+
+.featured-movie {
+  display: flex;
+  align-items: flex-end;
+  height: 48rem;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: local;
+  color: white;
+}
+
+.featured-movie__info {
+  animation: slidein 0.2s ease-in;
+}
+
+.featured-movie__title {
+  text-align: right;
+  font-size: 2.5rem;
+}
+
+.featured-movie__description {
+  width: 80%;
+  margin-left: auto;
+  font-size: 1.3rem;
+  text-align: right;
+  font-weight: 500;
+  margin-bottom: 3rem;
+}
+
+@keyframes slidein {
+  from {
+    transform: translateY(3rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+}
