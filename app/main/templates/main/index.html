@@ -1,5 +1,5 @@
 {% extends "main/base.html" %}
-
-{% block page_content %}
-<div>skrr</div>
+{% block scripts %}
+{{super()}}
+<script src={{url_for('main.static',filename='js/index.js' )}}></script>
 {% endblock %}

@@ -7,7 +7,6 @@ name = "pypi"
 flask = "*"
 pylint = "*"
 black = "*"
-flask-bootstrap = "*"
 click = "*"
 flask-wtf = "*"
 
