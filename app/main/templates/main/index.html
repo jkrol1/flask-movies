@@ -1,4 +1,15 @@
 {% extends "main/base.html" %}
+{%block page_content%}
+<main class="container">
+    <div class="search input-group mb-2">
+        <div class="search__prepend input-group-prepend">
+            <div class="search__prepend-icon-container input-group-text"><i class="search__icon fas fa-search"></i>
+            </div>
+        </div>
+        <input type="text" class="search__input form-control form-control-lg" placeholder="">
+    </div>
+</main>
+{% endblock %}
 {% block scripts %}
 {{super()}}
 <script src={{url_for('main.static',filename='js/index.js' )}}></script>
