@@ -8,7 +8,7 @@ function insertFeaturedMovie(movie) {
     var featuredMovieInfo = '<div class="featured-movie__info container"> \
                                 <h2 class="featured-movie__title">'+ movie.title + '</h2> \
                                 <p class="featured-movie__description">'+ movie.overview + '</p> \
-                                </div>'
+                            </div>'
 
     $(featuredMovieBackground).insertAfter('.header').hide().fadeIn(1000, function () {
         $('.featured-movie').append(featuredMovieInfo);
@@ -16,6 +16,10 @@ function insertFeaturedMovie(movie) {
 };
 
 $(function () {
+
+    // Add initial value for the search input
+    $('.search__input').val('Popular');
+
     $.ajax({
         url: 'https://api.themoviedb.org/3/trending/all/week?api_key=' + API_KEY,
         type: 'GET',
@@ -27,5 +31,19 @@ $(function () {
             console.log(error);
         }
     });
+
+    $.ajax({
+        url: 'https://api.themoviedb.org/3/search/multi?api_key=' + API_KEY + '&language=en-US&page=1&include_adult=true&query=%22popular%22',
+        type: 'GET',
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
 });
+
+// iterate over results array
+
 
