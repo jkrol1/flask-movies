@@ -38,7 +38,7 @@
 .featured-movie {
   display: flex;
   align-items: flex-end;
-  height: 48rem;
+  height: 44rem;
   width: 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -62,7 +62,7 @@
   font-size: 1.3rem;
   text-align: right;
   font-weight: 500;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 @keyframes slidein {
@@ -119,4 +119,21 @@ input.search__input::placeholder {
 i.search__icon {
   font-size: 1.25rem;
   color: var(--yellow);
+}
+
+.search-results {
+  min-height: 100vh;
+}
+
+.search-results .card {
+  cursor: pointer;
+  border: none;
+  width: 17%;
+  background-color: black;
+  color: whitesmoke;
+  transition: transform 0.2s ease;
+}
+
+.search-results .card:hover {
+  transform: translateY(-0.65rem);
 }

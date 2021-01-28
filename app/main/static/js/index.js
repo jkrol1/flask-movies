@@ -40,46 +40,6 @@ function renderFeaturedMovie(movie) {
     });
 };
 
-function createGridColumnElements(movies) {
-
-    var columnElements = [];
-
-    // iterate over movies array
-    for (var i = 0; i < movies.length; i++) {
-
-        movie = movies[i];
-
-        var columnHtml = '<div class="search-result"> \
-            <img class="search-result__image" src="https://image.tmdb.org/t/p/w300/' + movie.poster_path + '">\
-            <div class=""> \
-                <h4 class="">'+ movie.title + '</h4> \
-            </div >\
-        </div > ';
-
-        columnElements.push($(columnHtml));
-
-    };
-
-    return columnElements;
-
-};
-
-function assignColumnsToRows(rowElements, columnElements, columnsPerRow) {
-
-    var sliceStart = 0;
-    var sliceEnd = columnsPerRow;
-
-    for (var i = 0; i < rowElements.length; i++) {
-
-        for (var j = sliceStart; j < sliceEnd; j++) {
-            $(rowElements[i]).append(columnElements[j]);
-        }
-
-        sliceStart += columnsPerRow;
-        sliceEnd += columnsPerRow;
-    };
-};
-
 function createMoviesCards(movies) {
 
     var moviesCards = [];
@@ -117,32 +77,6 @@ function renderSearchResults(movies) {
 
 };
 
-
-
-
-/*
-function renderSearchResults(movies, columnsPerRow) {
-
-    var numberOfRows = Math.ceil(movies.length / columnsPerRow);
-
-    // Create container element
-    var containerElement = $('<div class="search-results container"></div');
-
-    // Add rows to container element
-    var rowHtml = '<div class="search-results__row row no-gutters my-4 justify-content-between"></div>';
-    containerElement.html(rowHtml.repeat(numberOfRows));
-
-    // Create column elements array
-    var columnElements = createGridColumnElements(movies);
-
-    assignColumnsToRows(containerElement[0].children, columnElements, columnsPerRow);
-
-
-    $('main.container').append(containerElement
-        .hide()
-        .fadeIn(500))
-};*/
-
 function removePreviousResults() {
     $('.search-results').remove();
 };
@@ -151,7 +85,6 @@ function removePreviousResults() {
 
 $(function () {
 
-    $('.search__results').height
 
     $.when(
         $.ajax({
@@ -171,6 +104,8 @@ $(function () {
                 app.initialMoviesList = response.results
                 renderFeaturedMovie(app.initialMoviesList[0]);
                 renderSearchResults(app.initialMoviesList);
+                $('.search-results').css('min-height', $('.search-results').height());
+
             },
             error: function (error) {
                 console.log(error);
@@ -200,4 +135,5 @@ $('.search__input').keyup(delay(function () {
         });
     };
 }, 500));
+
 
