@@ -9,6 +9,7 @@ pylint = "*"
 black = "*"
 click = "*"
 flask-wtf = "*"
+gunicorn = "*"
 
 [dev-packages]
 
