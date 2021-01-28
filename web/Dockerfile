@@ -5,7 +5,7 @@ FROM python:3.8.1-slim-buster
 RUN mkdir -p /home/app
 
 # create the app user
-RUN addgroup -S app && adduser -S app -G app
+RUN adduser app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -30,7 +30,7 @@ RUN pip install pipenv
 RUN pipenv install --system --deploy
 
 # chown all the files to the app user
-RUN chown -R app:app $APP_HOME
+RUN chown -R app $APP_HOME
 
 # change to the app user
 USER app
