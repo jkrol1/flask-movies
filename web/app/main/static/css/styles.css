@@ -1,139 +1,151 @@
+body {
+    background-color: black;
+}
+
 .header {
-  background-color: black;
+    background-color: black;
 }
 
 .navbar-brand,
 .nav-link {
-  color: var(--yellow);
-  font-weight: 600;
-  transition: 0.15s;
-  font-size: 1.7rem;
+    color: var(--yellow);
+    font-weight: 600;
+    transition: 0.15s;
+    font-size: 1.7rem;
 }
 
 .nav-link {
-  font-size: 1.1rem;
+    font-size: 1.1rem;
 }
 
 .navbar-brand:hover,
 .nav-link:hover {
-  color: var(--yellow);
+    color: var(--yellow);
 }
 
 .navbar-brand:hover {
-  transform: translateY(-0.15rem);
+    transform: translateY(-0.15rem);
 }
 
 .brand-name {
-  margin-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .fa-film {
-  font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 .fa-bars {
-  color: var(--yellow);
+    color: var(--yellow);
 }
 
+
 .featured-movie {
-  display: flex;
-  align-items: flex-end;
-  height: 44rem;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-attachment: local;
-  color: white;
+    display: flex;
+    align-items: flex-end;
+    height: 44rem;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: transparent;
+    color: white;
 }
 
 .featured-movie__info {
-  animation: slidein 0.2s ease-in;
+    animation: slidein 0.2s ease-in;
 }
 
 .featured-movie__title {
-  text-align: right;
-  font-size: 2.5rem;
+    text-align: right;
+    font-size: 2.5rem;
 }
 
 .featured-movie__description {
-  width: 80%;
-  margin-left: auto;
-  font-size: 1.3rem;
-  text-align: right;
-  font-weight: 500;
-  margin-bottom: 4rem;
+    width: 80%;
+    margin-left: auto;
+    font-size: 1.3rem;
+    text-align: right;
+    font-weight: 500;
+    margin-bottom: 4rem;
 }
 
 @keyframes slidein {
-  from {
-    transform: translateY(3rem);
-    opacity: 0;
-  }
+    from {
+        transform: translateY(3rem);
+        opacity: 0;
+    }
 
-  to {
-    transform: translateY(0rem);
-    opacity: 1;
-  }
+    to {
+        transform: translateY(0rem);
+        opacity: 1;
+    }
 }
 
 div.search {
-  margin-top: 2rem;
-  height: 3.5rem;
+    margin-top: 2rem;
+    height: 3.5rem;
 }
 
 div.search__prepend {
-  width: 7%;
-  min-width: 3rem;
+    width: 7%;
+    min-width: 3rem;
 }
 
 div.search__prepend-icon-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: black;
-  border-radius: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    border: none;
+    border-radius: 0;
+    border-bottom: 0.1rem solid var(--yellow);
 }
 
 input.search__input {
-  font-size: 1.4rem;
-  color: var(--yellow);
-  background-color: black;
-  border-left: black;
-  border-radius: 2rem;
-  font-weight: 400;
+    font-size: 1.4rem;
+    color: var(--yellow);
+    border: none;
+    background-color: black;
+    border-radius: 0;
+    border-bottom: 0.1rem solid var(--yellow);
+    font-weight: 400;
 }
 
 input.search__input:focus {
-  color: var(--yellow);
-  background-color: black;
-  border-color: #cccccc;
-  -webkit-box-shadow: none;
-  box-shadow: none;
+    color: var(--yellow);
+    background-color: black;
+    border-color: var(--yellow);
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 input.search__input::placeholder {
-  color: var(--yellow);
+    color: var(--yellow);
 }
 
 i.search__icon {
-  font-size: 1.25rem;
-  color: var(--yellow);
+    font-size: 1.25rem;
+    color: var(--yellow);
 }
 
 .search-results {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
-.search-results .card {
-  cursor: pointer;
-  border: none;
-  width: 17%;
-  background-color: black;
-  color: whitesmoke;
-  transition: transform 0.2s ease;
+.movie-card {
+    cursor: pointer;
+    border: none;
+    width: 17%;
+    background-color: transparent;
+    color: whitesmoke;
+    transition: 0.2s ease;
 }
 
-.search-results .card:hover {
-  transform: translateY(-0.65rem);
+
+.movie-card:hover {
+    transform: translateY(-0.65rem);
+    box-shadow: 0.65rem 0.65rem var(--yellow);
+
 }

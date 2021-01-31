@@ -21,7 +21,8 @@ function delay(callback, ms) {
 function parseGenresResponse(genresResponse) {
     for (var i = 0; i < genresResponse.length; i++) {
         app.genres[genresResponse[i]["id"]] = genresResponse[i]["name"]
-    };
+    }
+    ;
 };
 
 function renderFeaturedMovie(movie) {
@@ -31,11 +32,11 @@ function renderFeaturedMovie(movie) {
     featuredMovie.css('background-image', 'url(http://image.tmdb.org/t/p/w1280' + movie.backdrop_path + ')');
 
     var featuredMovieInfo = '<div class="featured-movie__info container"> \
-                                <h2 class="featured-movie__title">'+ movie.title + '</h2> \
-                                <p class="featured-movie__description">'+ movie.overview + '</p> \
+                                <h2 class="featured-movie__title">' + movie.title + '</h2> \
+                                <p class="featured-movie__description">' + movie.overview + '</p> \
                             </div>'
 
-    featuredMovie.insertAfter('.header').hide().fadeIn(1000, function () {
+    featuredMovie.insertAfter('.header').hide().fadeIn(350, function () {
         featuredMovie.append(featuredMovieInfo);
     });
 };
@@ -49,16 +50,17 @@ function createMoviesCards(movies) {
 
         movie = movies[i];
 
-        var movieCard = '<div class="card mt-4"> \
+        var movieCard = '<div class="movie-card card mt-5"> \
                 <img class="card-img-top" src="https://image.tmdb.org/t/p/w300/' + movie.poster_path + '">\
                 <div class="card-body"> \
-                    <h6 class="card-title">'+ movie.title + '</h4> \
+                    <h6 class="card-title">' + movie.title + '</h4> \
                 </div >\
             </div > ';
 
         moviesCards.push($(movieCard));
 
-    };
+    }
+    ;
 
     return moviesCards;
 };
@@ -80,7 +82,6 @@ function renderSearchResults(movies) {
 function removePreviousResults() {
     $('.search-results').remove();
 };
-
 
 
 $(function () {
@@ -133,7 +134,8 @@ $('.search__input').keyup(delay(function () {
                 console.log(error);
             }
         });
-    };
-}, 500));
+    }
+    ;
+}, 350));
 
 
