@@ -1,9 +1,19 @@
 var API_KEY = '9cecfc565596623dc9215b62a88cd003'
 
 var app = {
-    columnsPerRow: 5,
-    initialMoviesList: [],
+    page: 1,
+    numberOfPages: 1,
+    category: 'popular', // possible options popular, search
+    searchQuery: '',
+    fetching: false,
     genres: {},
+};
+
+var apiEndpoints = {
+    'genres': 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + API_KEY,
+    'popular': 'https://api.themoviedb.org/3/trending/movie/week?api_key=' + API_KEY,
+    'search': 'https://api.themoviedb.org/3/search/movie?api_key=' + API_KEY +
+        '&language=en-US&include_adult=false&query=',
 };
 
 
@@ -41,6 +51,11 @@ function renderFeaturedMovie(movie) {
     });
 };
 
+function genreIdToText(genresArray) {
+    genresArray = genresArray.map(genre => app.genres[Number(genre)]);
+    return genresArray.join(', ');
+};
+
 function createMoviesCards(movies) {
 
     var moviesCards = [];
@@ -49,11 +64,13 @@ function createMoviesCards(movies) {
     for (var i = 0; i < movies.length; i++) {
 
         movie = movies[i];
-
+        console.log(movie);
         var movieCard = '<div class="movie-card card mt-5"> \
                 <img class="card-img-top" src="https://image.tmdb.org/t/p/w300/' + movie.poster_path + '">\
-                <div class="card-body"> \
+                <div class="card-body position-relative"> \
                     <h6 class="card-title">' + movie.title + '</h4> \
+                    <p class="card-text">' + genreIdToText(movie.genre_ids) + '</p> \
+                    <span class="movie-mark"><p class="my-0">' + movie.vote_average + '</p></span> \
                 </div >\
             </div > ';
 
@@ -73,9 +90,9 @@ function renderSearchResults(movies) {
     // 
     containerElement.html(createMoviesCards(movies));
 
-    $('main.container').append(containerElement
+    $('main.container').append(containerElement)
         .hide()
-        .fadeIn(500));
+        .fadeIn(500);
 
 };
 
@@ -89,7 +106,7 @@ $(function () {
 
     $.when(
         $.ajax({
-            url: 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + API_KEY,
+            url: apiEndpoints['genres'],
             type: 'GET',
             success: function (response) {
                 parseGenresResponse(response.genres);
@@ -99,43 +116,74 @@ $(function () {
             }
         }),
         $.ajax({
-            url: 'https://api.themoviedb.org/3/trending/movie/week?api_key=' + API_KEY,
+            url: apiEndpoints[app.category],
             type: 'GET',
             success: function (response) {
-                app.initialMoviesList = response.results
-                renderFeaturedMovie(app.initialMoviesList[0]);
-                renderSearchResults(app.initialMoviesList);
+                onMoviesAjaxSuccess(response);
+                renderFeaturedMovie(response.results[0]);
                 $('.search-results').css('min-height', $('.search-results').height());
-
             },
-            error: function (error) {
-                console.log(error);
-            }
+            error: onMoviesAjaxError
         }));
 });
 
+function onMoviesAjaxSuccess(response, page = 1) {
+    removePreviousResults();
+    app.page = page;
+    app.numberOfPages = response.total_pages;
+    renderSearchResults(response.results);
+};
+
+function onMoviesAjaxError(error) {
+    console.log(error);
+};
+
+function ajaxRequest(url, type) {
+    return $.ajax({
+        url: url,
+        type: type,
+        success: onMoviesAjaxSuccess,
+        error: onMoviesAjaxError
+    });
+};
+
 $('.search__input').keyup(delay(function () {
 
-    var query = this.value;
+    app.searchQuery = this.value;
 
-    if (query === '') {
-        removePreviousResults();
-        renderSearchResults(app.initialMoviesList);
+    if (app.searchQuery === '') {
+        app.category = 'popular';
+        ajaxRequest(apiEndpoints[app.category], 'GET');
 
     } else {
-        $.ajax({
-            url: 'https://api.themoviedb.org/3/search/movie?api_key=' + API_KEY + '&language=en-US&page=1&include_adult=false&query=' + query,
-            type: 'GET',
-            success: function (response) {
-                removePreviousResults();
-                renderSearchResults(response.results);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
+        app.category = 'search';
+        ajaxRequest(apiEndpoints[app.category] + app.searchQuery, 'GET');
     }
-    ;
+
 }, 350));
 
+function appendNextMoviesPage(response) {
+    $('.search-results').append(createMoviesCards(response.results))
+        .fadeIn(500);
+    app.fetching = false;
+    document.querySelector('.fetching-info').classList.toggle('d-none');
+};
+
+$(window).scroll(function () {
+    var lastMovie = $('.movie-card:last-child')[0];
+    var rect = lastMovie.getBoundingClientRect();
+    if (rect.top - $(window)[0].innerHeight < 0) {
+        if (app.page < app.numberOfPages && app.fetching === false) {
+            app.page += 1;
+            app.fetching = true;
+            document.querySelector('.fetching-info').classList.toggle('d-none');
+            $.ajax({
+                url: apiEndpoints[app.category] + app.searchQuery + '&page=' + app.page,
+                type: 'GET',
+                success: delay(appendNextMoviesPage, 1000),
+                error: onMoviesAjaxError
+            });
+        }
+    }
+});
 
