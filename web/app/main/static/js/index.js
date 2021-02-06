@@ -64,9 +64,15 @@ function createMoviesCards(movies) {
     for (var i = 0; i < movies.length; i++) {
 
         movie = movies[i];
-        console.log(movie);
+
+        if (!movie.poster_path) {
+            poster_path = "'../assets/not_available.jpg";
+        } else {
+            poster_path = 'https://image.tmdb.org/t/p/w300/' + movie.poster_path;
+        }
+
         var movieCard = '<div class="movie-card card mt-5"> \
-                <img class="card-img-top" src="https://image.tmdb.org/t/p/w300/' + movie.poster_path + '">\
+                <img class="card-img-top" src="' + poster_path + '">\
                 <div class="card-body position-relative"> \
                     <h6 class="card-title">' + movie.title + '</h4> \
                     <p class="card-text">' + genreIdToText(movie.genre_ids) + '</p> \
@@ -84,20 +90,14 @@ function createMoviesCards(movies) {
 
 function renderSearchResults(movies) {
 
-    // Create container element
-    var containerElement = $('<div class="search-results container d-flex justify-content-around flex-wrap"></div');
-
-    // 
-    containerElement.html(createMoviesCards(movies));
-
-    $('main.container').append(containerElement)
+    $('.search-results').append(createMoviesCards(movies))
         .hide()
         .fadeIn(500);
 
 };
 
 function removePreviousResults() {
-    $('.search-results').remove();
+    $('.search-results').empty();
 };
 
 
@@ -129,7 +129,7 @@ $(function () {
 
 function onMoviesAjaxSuccess(response, page = 1) {
     removePreviousResults();
-    app.page = page;
+    app.page = 1;
     app.numberOfPages = response.total_pages;
     renderSearchResults(response.results);
 };
@@ -158,6 +158,7 @@ $('.search__input').keyup(delay(function () {
     } else {
         app.category = 'search';
         ajaxRequest(apiEndpoints[app.category] + app.searchQuery, 'GET');
+
     }
 
 }, 350));
@@ -170,9 +171,11 @@ function appendNextMoviesPage(response) {
 };
 
 $(window).scroll(function () {
-    var lastMovie = $('.movie-card:last-child')[0];
-    var rect = lastMovie.getBoundingClientRect();
-    if (rect.top - $(window)[0].innerHeight < 0) {
+    var lastListedMovie = $('.movie-card:last-child')[0];
+    var twentiethListedMovie = $('.movie-card:nth-of-type(20)')[0];
+    var LastListedMovieRect = lastListedMovie.getBoundingClientRect();
+    var twentiethListedMovieRect = twentiethListedMovie.getBoundingClientRect();
+    if (LastListedMovieRect.top - $(window)[0].innerHeight < 0) {
         if (app.page < app.numberOfPages && app.fetching === false) {
             app.page += 1;
             app.fetching = true;
@@ -184,6 +187,23 @@ $(window).scroll(function () {
                 error: onMoviesAjaxError
             });
         }
+
+    }
+    const scrollToTop = $('.scroll-to-top')[0];
+    if (twentiethListedMovieRect.top - $(window)[0].innerHeight < 0) {
+        if (!scrollToTop.classList.contains('show')) scrollToTop.classList.add('show');
+    } else {
+        if (scrollToTop.classList.contains('show')) scrollToTop.classList.remove('show');
     }
 });
 
+document.querySelector('.scroll-to-top').addEventListener('click', () => {
+
+    const search = document.querySelector('.search');
+
+    window.scrollTo({
+        top: search.offsetTop - search.offsetHeight - 20,
+        left: 0,
+        behavior: 'smooth',
+    });
+});

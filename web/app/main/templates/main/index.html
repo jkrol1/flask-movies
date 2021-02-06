@@ -8,15 +8,17 @@
             <div class="search__prepend-icon-container input-group-text"><i class="search__icon fas fa-search"></i>
             </div>
         </div>
-        <input type="text" class="search__input form-control form-control-lg" placeholder="">
+        <input type="text" class="search__input form-control" placeholder="">
     </div>
+    <div class="search-results container d-flex align-content-start align-items-start justify-content-around flex-wrap"></div>
     <div class="fetching-info d-none">
         <div class="spinner-border text-primary" role="status">
         </div>
         <p class="mt-2">Loading next page...</p>
     </div>
-    <div class="arrow-to-top">
-        <img class="arrow-to-top__icon"src={{url_for('main.static',filename='assets/arrow-up-square-fill.svg' )}} alt="scroll-to-top-icon">
+    <div class="scroll-to-top">
+        <img class="scroll-to-top__icon" src={{url_for('main.static',filename='assets/arrow-up-square-fill.svg' )}}
+             alt="scroll-to-top-icon">
     </div>
 </main>
 {% endblock %}
