@@ -13,7 +13,9 @@ class MoviesModel {
     }
 
     _fetchMovies = async endpoint => {
+        this.moviesFetching = true;
         const movies = await fetch(this._apiEndpoints[endpoint]);
+        this.moviesFetching = false;
         return movies
     };
 };
