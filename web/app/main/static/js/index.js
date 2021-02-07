@@ -66,7 +66,7 @@ function createMoviesCards(movies) {
         movie = movies[i];
 
         if (!movie.poster_path) {
-            poster_path = "'../assets/not_available.jpg";
+            poster_path = "main/static/assets/not_available.jpg";
         } else {
             poster_path = 'https://image.tmdb.org/t/p/w300/' + movie.poster_path;
         }

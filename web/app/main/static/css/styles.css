@@ -147,6 +147,7 @@ body {
     background-color: transparent;
     color: whitesmoke;
     transition: 0.2s ease;
+    cursor:pointer;
 }
 
 .movie-card .card-img-top {
