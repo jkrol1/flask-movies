@@ -1,4 +1,7 @@
+import MoviesModel from './movies-model.js';
+
 var API_KEY = '9cecfc565596623dc9215b62a88cd003'
+
 
 var app = {
     page: 1,
@@ -63,12 +66,12 @@ function createMoviesCards(movies) {
     // iterate over movies array
     for (var i = 0; i < movies.length; i++) {
 
-        movie = movies[i];
+        var movie = movies[i];
 
         if (!movie.poster_path) {
-            poster_path = "main/static/assets/not_available.jpg";
+            var poster_path = "main/static/assets/not_available.jpg";
         } else {
-            poster_path = 'https://image.tmdb.org/t/p/w300/' + movie.poster_path;
+            var poster_path = 'https://image.tmdb.org/t/p/w300/' + movie.poster_path;
         }
 
         var movieCard = '<div class="movie-card card mt-5"> \
@@ -207,3 +210,5 @@ document.querySelector('.scroll-to-top').addEventListener('click', () => {
         behavior: 'smooth',
     });
 });
+
+window.MoviesModel = MoviesModel;

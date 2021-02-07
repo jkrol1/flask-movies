@@ -1,21 +1,44 @@
-import API_KEY from 'api.js';
+import API_KEY from './api.js';
 
 class MoviesModel {
     constructor() {
-        this.movies = this._fetchMovies('popular');
+        this.moviesList = [];
+        this.page = 1;
+        this.total_pages = 0
         this.moviesFetching = false;
+        this.searchQuery = '';
+        this.genres = {};
         this._apiEndpoints = {
-            'genres': 'https://api.themoviedb.org/3/genre/movie/list?api_key=' + API_KEY,
-            'popular': 'https://api.themoviedb.org/3/trending/movie/week?api_key=' + API_KEY,
-            'search': 'https://api.themoviedb.org/3/search/movie?api_key=' + API_KEY +
-                '&language=en-US&include_adult=false&query=',
+            'genres': `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`,
+            'popular': `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`,
+            'search': `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}
+                &language=en-US&include_adult=false&query=`,
         };
     }
 
-    _fetchMovies = async endpoint => {
+    fetchMovies = async (endpoint, query = '') => {
         this.moviesFetching = true;
-        const movies = await fetch(this._apiEndpoints[endpoint]);
+        const response = await fetch(this._apiEndpoints[endpoint] + query);
+        const data = await response.json();
+        this.moviesList = data.results;
+        this.total_pages = data.total_pages;
         this.moviesFetching = false;
-        return movies
     };
+
+    fetchGenres = async () => {
+        const response = await fetch(this._apiEndpoints['genres']);
+        const {genres} = await response.json();
+        genres.forEach(genre => {
+            const {id, name} = genre;
+            this.genres[id] = name;
+        });
+    }
+
+    initialDataFetching = async () => {
+        await this.fetchGenres();
+        await this.fetchMovies('popular');
+    }
+
 };
+
+export default MoviesModel;
