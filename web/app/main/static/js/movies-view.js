@@ -1,54 +1,59 @@
 class MoviesView {
-    constructor(){
+    constructor() {
         this.searchResults = document.querySelector('.search-results');
         this.searchInput = document.querySelector('.search__input');
+        this.lastListedMovie = document.querySelector('.movie-card:last-child');
+        this.twentiethListedMovie = document.querySelector('.movie-card:nth-of-type(20)');
+        this.fetchingInfo = document.querySelector('.fetching-info');
+    }
+
+    renderFeaturedMovie = movie => {
+
     };
 
-    renderFeaturedMovie = movie=>{
+    setSearchResultsMinHeight = minHeight => {
+        this.searchResults.style.minHeight = String(this.searchResults.clientHeight);
+    }
 
-    };
-
-    renderMoviesList = (moviesList, genresObj)=>{
+    renderMoviesList = (moviesList, genresObj) => {
         this._removeMoviesList();
         $('.search-results').append(this._createMoviesCards(moviesList, genresObj))
-        .hide()
-        .fadeIn(500);
+            .hide()
+            .fadeIn(500);
     }
 
     bindSearchInputChange = handler => {
-       this.searchInput.addEventListener('keyup', this._delay(()=>handler(this.value), 350))
+        this.searchInput.addEventListener('keyup', event => {
+            handler(event.target.value);
+        });
     }
 
-    _delay(callback, ms) {
-    var timer = 0;
-    return function () {
-        var context = this, args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-            callback.apply(context, args);
-        }, ms || 0);
-    };
+    bindScroll = handler => {
+
     }
 
-    _removeMoviesList = ()=>{
-    while (this.searchResults.firstChild) {
-    this.searchResults.removeChild(this.searchResults.firstChild)
-    }}
+    toggleFetchingInfo = _ => this.fetchingInfo.classList.toggle('d-none');
 
-    _genreIdToText = (movieGenres,genresObj) => {
-    movieGenres = movieGenres.map(genre => genresObj[Number(genre)]);
-    return movieGenres.join(', ')
+    _removeMoviesList = () => {
+        while (this.searchResults.firstChild) {
+            this.searchResults.removeChild(this.searchResults.firstChild)
+        }
     }
 
-    _createMoviesCards = (moviesList,genresObj) => moviesList.map(movie=>{
+    _genreIdToText = (movieGenres, genresObj) => {
+        movieGenres = movieGenres.map(genre => genresObj[Number(genre)]);
+        return movieGenres.join(', ')
+    }
+
+    _createMoviesCards = (moviesList, genresObj) => moviesList.map(movie => {
         let poster_path;
-            if (!movie.poster_path) {
+        if (!movie.poster_path) {
             poster_path = "main/static/assets/not_available.jpg";
         } else {
             poster_path = `https://image.tmdb.org/t/p/w300/${movie.poster_path}`;
         }
 
-    const movieCard = `
+        const movieCard = `
             <div class="movie-card card mt-5">
                 <img class="card-img-top" src="${poster_path}">
                 <div class="card-body position-relative">
@@ -58,8 +63,8 @@ class MoviesView {
                 </div >
             </div >`
 
-    return movieCard
+        return movieCard
     });
- }
+}
 
- export default MoviesView;
+export default MoviesView;

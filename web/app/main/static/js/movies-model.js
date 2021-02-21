@@ -4,15 +4,14 @@ class MoviesModel {
     constructor() {
         this.moviesList = [];
         this.page = 1;
-        this.total_pages = 0
+        this.totalPages = 0
         this.moviesFetching = false;
         this.searchQuery = '';
         this.genres = {};
         this._apiEndpoints = {
             'genres': `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`,
             'popular': `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`,
-            'search': `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}
-                &language=en-US&include_adult=false&query=`,
+            'search': `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&include_adult=false&query=`,
         };
     }
 
@@ -21,7 +20,7 @@ class MoviesModel {
         const response = await fetch(this._apiEndpoints[endpoint] + query);
         const data = await response.json();
         this.moviesList = data.results;
-        this.total_pages = data.total_pages;
+        this.totalPages = data.totalPages;
         this.moviesFetching = false;
     };
 

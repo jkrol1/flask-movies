@@ -1,7 +1,8 @@
 import MoviesModel from './movies-model.js';
+import MoviesView from './movies-view.js';
+import MoviesController from './movies-controller.js';
 
-var API_KEY = '9cecfc565596623dc9215b62a88cd003'
-
+/*
 
 var app = {
     page: 1,
@@ -210,5 +211,7 @@ document.querySelector('.scroll-to-top').addEventListener('click', () => {
         behavior: 'smooth',
     });
 });
+*/
 
-window.MoviesModel = MoviesModel;
+const controller = new MoviesController(new MoviesModel(), new MoviesView());
+window.controller = controller;
