@@ -2,8 +2,6 @@ class MoviesView {
     constructor() {
         this.searchResults = document.querySelector('.search-results');
         this.searchInput = document.querySelector('.search__input');
-        this.lastListedMovie = document.querySelector('.movie-card:last-child');
-        this.twentiethListedMovie = document.querySelector('.movie-card:nth-of-type(20)');
         this.fetchingInfo = document.querySelector('.fetching-info');
     }
 
@@ -15,8 +13,8 @@ class MoviesView {
         this.searchResults.style.minHeight = String(this.searchResults.clientHeight);
     }
 
-    renderMoviesList = (moviesList, genresObj) => {
-        this._removeMoviesList();
+    renderMovies = (moviesList, genresObj) => {
+        //this._removeMoviesList();
         $('.search-results').append(this._createMoviesCards(moviesList, genresObj))
             .hide()
             .fadeIn(500);
@@ -29,12 +27,16 @@ class MoviesView {
     }
 
     bindScroll = handler => {
-
+        document.addEventListener('scroll', handler);
     }
 
     toggleFetchingInfo = _ => this.fetchingInfo.classList.toggle('d-none');
 
-    _removeMoviesList = () => {
+    getLastListedMovie = _ => document.querySelector('.movie-card:last-child');
+
+    getTwentiethListedMovie = _ => document.querySelector('.movie-card:nth-of-type(20)');
+
+    removeMoviesList = () => {
         while (this.searchResults.firstChild) {
             this.searchResults.removeChild(this.searchResults.firstChild)
         }

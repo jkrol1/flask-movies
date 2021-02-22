@@ -2,7 +2,7 @@ import API_KEY from './api.js';
 
 class MoviesModel {
     constructor() {
-        this.moviesList = [];
+        this.fetchedMovies = [];
         this.page = 1;
         this.totalPages = 0
         this.moviesFetching = false;
@@ -17,10 +17,11 @@ class MoviesModel {
 
     fetchMovies = async (endpoint, query = '') => {
         this.moviesFetching = true;
-        const response = await fetch(this._apiEndpoints[endpoint] + query);
+        this.searchQuery = query;
+        const response = await fetch(this._apiEndpoints[endpoint] + query + '&page=' + this.page);
         const data = await response.json();
-        this.moviesList = data.results;
-        this.totalPages = data.totalPages;
+        this.fetchedMovies = data.results;
+        this.totalPages = data.total_pages;
         this.moviesFetching = false;
     };
 
