@@ -4,6 +4,7 @@ body {
 
 .header {
     background-color: black;
+    height: 4.5rem;
 }
 
 .navbar-brand,
@@ -46,7 +47,8 @@ body {
 
 .featured-movie {
     width: 100%;
-    height: 44rem;
+    height: calc(100vh - 4.5rem);
+    max-height: 63.5rem;
     display: flex;
     align-items: flex-end;
     background-repeat: no-repeat;
@@ -63,16 +65,16 @@ body {
 
 .featured-movie__title {
     text-align: right;
-    font-size: 2.5rem;
+    font-size: 1.8rem;
 }
 
 .featured-movie__description {
     width: 80%;
     margin-left: auto;
-    font-size: 1.3rem;
+    font-size: 1rem;
     text-align: right;
     font-weight: 500;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 @keyframes slidein {
@@ -136,18 +138,15 @@ body {
     color: var(--yellow);
 }
 
-.search-results {
-    min-height: 100vh;
-}
-
 .movie-card {
     width: 85%;
     height: max-content;
     border: none;
     background-color: transparent;
     color: whitesmoke;
+    animation: fadein 0.35s ease-in-out;
     transition: 0.2s ease;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .movie-card .card-img-top {
@@ -222,7 +221,7 @@ body {
     height: 2.3rem;
 }
 
-@media (min-width: 400px) {
+@media (min-width: 500px) {
     .movie-card {
         width: 45%;
     }
@@ -245,6 +244,15 @@ body {
 }
 
 @media (min-width: 992px) {
+    .featured-movie__title {
+        font-size: 2.5rem;
+    }
+
+    .featured-movie__description {
+        font-size: 1.3rem;
+        margin-bottom: 4rem;
+    }
+
     .movie-card {
         width: 30%;
     }
@@ -268,5 +276,14 @@ body {
     .scroll-to-top__icon {
         width: 3rem;
         height: 3rem;
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

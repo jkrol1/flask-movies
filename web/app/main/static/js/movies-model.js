@@ -15,19 +15,25 @@ class MoviesModel {
         };
     }
 
-    fetchMovies = async (endpoint, query = '') => {
+    fetchMovies = async (endpoint, query = '', delay) => {
         this.moviesFetching = true;
         this.searchQuery = query;
         const response = await fetch(this._apiEndpoints[endpoint] + query + '&page=' + this.page);
         const data = await response.json();
         this.fetchedMovies = data.results;
         this.totalPages = data.total_pages;
+
+        if (delay) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+
         this.moviesFetching = false;
     };
 
     fetchGenres = async () => {
         const response = await fetch(this._apiEndpoints['genres']);
         const {genres} = await response.json();
+
         genres.forEach(genre => {
             const {id, name} = genre;
             this.genres[id] = name;
