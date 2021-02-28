@@ -4,7 +4,7 @@ body {
 
 .header {
     background-color: black;
-    height: 4.5rem;
+    min-height: 4.5rem;
 }
 
 .navbar-brand,
