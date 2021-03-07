@@ -1,7 +1,11 @@
-{% extends "main/base.html" %}
-{%block page_content%}
+{% extends "base.html" %}
 
-<div class="featured-movie"></div>
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('main.static',filename='css/styles.css')}}">
+{% endblock %}
+
+{%block page_content%}
+<div class="featured-movie"></div>ł
 <main class="container">
     <div class="search input-group">
         <div class="search__prepend input-group-prepend">
@@ -10,7 +14,8 @@
         </div>
         <input type="text" class="search__input form-control" placeholder="">
     </div>
-    <div class="search-results container d-flex align-content-start align-items-start justify-content-around flex-wrap"></div>
+    <div class="search-results container d-flex align-content-start align-items-start justify-content-around flex-wrap">
+    </div>
     <div class="fetching-info d-none">
         <div class="spinner-border text-primary" role="status">
         </div>
@@ -18,7 +23,7 @@
     </div>
     <div class="scroll-to-top">
         <img class="scroll-to-top__icon" src={{url_for('main.static',filename='assets/arrow-up-square-fill.svg' )}}
-             alt="scroll-to-top-icon">
+            alt="scroll-to-top-icon">
     </div>
 </main>
 {% endblock %}

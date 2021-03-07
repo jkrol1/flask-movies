@@ -1,0 +1,41 @@
+.header {
+  background-color: black;
+  min-height: 4.5rem;
+}
+
+.navbar-brand,
+.nav-link {
+  color: var(--yellow);
+  font-weight: 600;
+  transition: 0.15s;
+  font-size: 1.7rem;
+}
+
+.nav-link {
+  color: whitesmoke;
+}
+
+.nav-link {
+  font-size: 1.1rem;
+}
+
+.navbar-brand:hover,
+.nav-link:hover {
+  color: var(--yellow);
+}
+
+.navbar-brand:hover {
+  transform: translateY(-0.15rem);
+}
+
+.brand-name {
+  margin-right: 0.5rem;
+}
+
+.fa-film {
+  font-size: 1.5rem;
+}
+
+.fa-bars {
+  color: var(--yellow);
+}
