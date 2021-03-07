@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .header {
   background-color: black;
   min-height: 4.5rem;
@@ -38,4 +42,15 @@
 
 .fa-bars {
   color: var(--yellow);
+}
+
+.errors {
+  padding: 0;
+  list-style: none;
+}
+
+.errors__error {
+  font-size: 0.9rem;
+  color: red;
+  font-weight: bold;
 }
