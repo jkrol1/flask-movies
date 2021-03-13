@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.fields.html5 import EmailField
+from wtforms import BooleanField, PasswordField, SubmitField, StringField
 from wtforms.validators import (
     InputRequired,
     Length,
@@ -11,7 +10,6 @@ from wtforms.validators import (
 
 
 class LoginForm(FlaskForm):
-    email = EmailField("Email", validators=[InputRequired(), Email()])
-    password = PasswordField(
-        "Password", validators=[Length(min=1, max=5), InputRequired()]
-    )
+    email = StringField("Email", validators=[InputRequired(), Email()])
+    password = PasswordField("Password", validators=[Length(min=7), InputRequired()])
+    remember_me = BooleanField("Keep me logged in")
