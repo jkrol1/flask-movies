@@ -27,5 +27,8 @@ class User(db.Model, UserMixin):
     def load_user(user_id):
         return User.query.get(int(user_id))
 
+    def generate_confirmation_token(self, expiration=3600):
+        pass
+
     def __repr__(self):
         return f"<User {self.username}>"
