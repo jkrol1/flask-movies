@@ -1,0 +1,7 @@
+Dear {{user.username}}
+Thanks for checking out Flask-Movies
+To confirm your account click on the below link:</p>
+{{url_for('auth.confirm',token=token,_external=True)}}
+Kind regards,
+Flask-Movies Admin
+Remember that this email has been generated automatically

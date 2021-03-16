@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('auth.static',filename='css/styles.css')}}">
+{% endblock %}
+
+{% block page_content %}
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Hello, {{ current_user.username }}</h1>
+        <p class="lead">Your account is unconfirmed. In order to use Flask-Movies you need to confirm your account</p>
+        <hr class="my-4">
+        <p>Click on below button to resend confirmation email</p>
+        <a class="btn btn-primary btn-md" href="{{url_for('auth.resend_confirmation')}}" role="button">Resend</a>
+    </div>
+</div>
+{% endblock %}
