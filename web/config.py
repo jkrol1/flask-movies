@@ -6,6 +6,7 @@ load_dotenv()
 
 
 class Config:
+    ADMIN = os.environ.get("MAIL_USERNAME")
     SECRET_KEY = os.environ.get("SECRET_KEY")
     MAIL_SERVER = os.environ.get("MAIL_SERVER")
     MAIL_PORT = os.environ.get("MAIL_PORT")

@@ -7,6 +7,71 @@ from . import db
 from . import login_manager
 
 
+class Permission:
+    FOLLOW = 1
+    COMMENT = 2
+    WRITE = 4
+    MODERATE = 8
+    ADMIN = 16
+
+
+class Role(db.Model):
+    __tablename__ = "roles"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    default = db.Column(db.Boolean, default=False, index=True)
+    permissions = db.Column(db.Integer)
+    users = db.relationship("User", backref="role", lazy="dynamic")
+
+    def __init__(self, **kwargs):
+        super(Role, self).__init__(**kwargs)
+        if self.permissions is None:
+            self.permissions = 0
+
+    def has_permission(self, permission):
+        return permission & self.permissions == permission
+
+    def add_permission(self, permission):
+        if not self.has_permission(permission):
+            self.permissions += permission
+
+    def reset_permissions(self):
+        self.permissions = 0
+
+    def remove_permission(self, permission):
+        if self.has_permission(permission):
+            self.permissions -= permission
+
+    @classmethod
+    def add_roles(cls):
+        roles = {
+            "USER": [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT],
+            "MODERATOR": [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT],
+            "ADMIN": [
+                Permission.FOLLOW,
+                Permission.WRITE,
+                Permission.COMMENT,
+                Permission.ADMIN,
+            ],
+        }
+
+        for role_name, permissions in roles.items():
+            role = Role.query.filter_by(name=role_name).first()
+            if role is None:
+                role = Role(name="")
+            role.reset_permissions()
+
+            if role_name == "USER":
+                role.default = True
+
+            for permission in permissions:
+                role.add_permission(permission)
+
+            db.session.add(role)
+
+        db.session.commit()
+
+
 class User(db.Model, UserMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
@@ -14,6 +79,14 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
+
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)
+        if self.role is None:
+            if self.email == current_app.config["ADMIN"]:
+                self.role = Role.query.filter_by(name="ADMIN").first()
+            else:
+                self.role = Role.query.filter_by(default=True).first()
 
     @property
     def password(self):
@@ -46,6 +119,12 @@ class User(db.Model, UserMixin):
         db.session.add(self)
         db.session.commit()
         return True
+
+    def can(self, permission):
+        return self.role is not None and self.role.has_permission(permission)
+
+    def is_administrator(self):
+        return self.can(Permission.ADMIN)
 
     def __repr__(self):
         return f"<User {self.username}>"
