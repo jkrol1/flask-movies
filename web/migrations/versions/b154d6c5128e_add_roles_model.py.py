@@ -1,9 +1,7 @@
 """Add Roles model
-
 Revision ID: b154d6c5128e
 Revises: b5f6f0359153
 Create Date: 2021-03-17 22:43:19.122794
-
 """
 from alembic import op
 import sqlalchemy as sa

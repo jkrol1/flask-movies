@@ -1,5 +1,5 @@
 from flask import current_app
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -46,11 +46,17 @@ class Role(db.Model):
     def add_roles(cls):
         roles = {
             "USER": [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT],
-            "MODERATOR": [Permission.FOLLOW, Permission.WRITE, Permission.COMMENT],
+            "MODERATOR": [
+                Permission.FOLLOW,
+                Permission.WRITE,
+                Permission.COMMENT,
+                Permission.MODERATE,
+            ],
             "ADMIN": [
                 Permission.FOLLOW,
                 Permission.WRITE,
                 Permission.COMMENT,
+                Permission.MODERATE,
                 Permission.ADMIN,
             ],
         }
@@ -58,7 +64,7 @@ class Role(db.Model):
         for role_name, permissions in roles.items():
             role = Role.query.filter_by(name=role_name).first()
             if role is None:
-                role = Role(name="")
+                role = Role(name=role_name)
             role.reset_permissions()
 
             if role_name == "USER":
@@ -79,6 +85,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -128,3 +135,14 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"<User {self.username}>"
+
+
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, permission):
+        return False
+
+    def is_administrator(self):
+        return False
+
+
+login_manager.anonymous_user = AnonymousUser
