@@ -1,4 +1,4 @@
-import API_KEY from './api.js';
+import API_KEY from '../../../static/js/api.js';
 
 class MoviesModel {
     constructor() {
@@ -32,10 +32,10 @@ class MoviesModel {
 
     fetchGenres = async () => {
         const response = await fetch(this._apiEndpoints['genres']);
-        const {genres} = await response.json();
+        const { genres } = await response.json();
 
         genres.forEach(genre => {
-            const {id, name} = genre;
+            const { id, name } = genre;
             this.genres[id] = name;
         });
     }

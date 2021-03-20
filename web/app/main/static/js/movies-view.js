@@ -66,14 +66,14 @@ class MoviesView {
         }
 
         const movieCard =
-            `<div class="movie-card card mt-5">
+            `<a class="movie-card card mt-5" href="/movie/${movie.id}">
                 <img class="card-img-top" src="${poster_path}">
                 <div class="card-body position-relative">
                     <h6 class="card-title">${movie.title}</h4>
                     <p class="card-text">${this._genreIdToText(movie.genre_ids, genresObj)}</p>
                     <span class="movie-mark"><p class="my-0">${movie.vote_average}</p></span>
                 </div >
-            </div >`
+            </a >`
 
         return movieCard
     };
