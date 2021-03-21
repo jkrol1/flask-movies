@@ -4,7 +4,28 @@
 {% endblock %}
 
 {% block page_content %}
-
+<main class="container p-0">
+    <div class="movie-background mt-5"></div>
+    <div class="movie-overview container"></div>
+    <h4 class="p-4 display-4">Actors</h4>
+    <div class="movie-actors p-2 d-flex flex-nowrap align-items-center">
+    </div>
+    <h4 class="p-4 display-4">Gallery</h4>
+    <div id="carousel-gallery" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+        </div>
+        <a class="carousel-control-prev" href="#carousel-gallery" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carousel-gallery" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <h4 class="p-3 display-4">Recommendations</h4>
+    <div class="movie-recommendations p-2 d-flex flex-nowrap align-items-center"></div>
+</main>
 {% endblock %}
 
 {% block scripts %}

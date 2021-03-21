@@ -4,7 +4,7 @@ html {
 
 .header {
   background-color: black;
-  min-height: 4.5rem;
+  min-height: 3.5rem;
 }
 
 .navbar-brand,
@@ -20,7 +20,7 @@ html {
 }
 
 .nav-link {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .navbar-brand:hover,
