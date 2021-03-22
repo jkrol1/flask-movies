@@ -53,8 +53,8 @@ const renderMovieOverview = movie => {
 }
 const createActorHtml = actor => (`<div class="card m-2 shadow">
                                         <img class="card-img-top" src="https://image.tmdb.org/t/p/w300/${actor.profile_path}" alt="Card image">
-                                        <div class="card-body p-2 justify-content-center">
-                                            <h6 class="card-title text-center text-white">${actor.character}</h5>
+                                        <div class="card-body p-3 justify-content-center">
+                                            <h6 class="card-title mb-1 text-center text-white">${actor.character}</h5>
                                             <p class="card-text text-center text-white">${actor.original_name}</p>
                                         </div>
                                     </div>`);
@@ -86,12 +86,12 @@ const renderImages = images => {
     });
 }
 
-const createRecommendedMovieHtml = movie => (`<div class="card m-2 shadow">
+const createRecommendedMovieHtml = movie => (`<a href="/movie/${movie.id}" class="card m-2 shadow">
                                                     <img class="card-img-top" src="https://image.tmdb.org/t/p/w300/${movie.poster_path}" alt="Card image">
-                                                    <div class="card-body p-2 justify-content-center">
-                                                        <h6 class="card-title text-center text-white">${movie.title}</h5>
+                                                    <div class="card-body p-3 justify-content-center">
+                                                        <h6 class="card-title text-center text-white m-0">${movie.title}</h5>
                                                     </div>
-                                                </div>`
+                                                </a>`
 );
 
 const renderRecommendedMovies = recommendedMovies => {

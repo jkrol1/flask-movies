@@ -16,5 +16,3 @@ renderView(
     actors.cast.slice(0, 10),
     recommendations.results,
     images.backdrops);
-
-console.log(movie, actors, recommendations, images);
