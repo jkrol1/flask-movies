@@ -14,7 +14,7 @@ moment = Moment()
 login_manager = LoginManager()
 login_manager.login_view = "auth.login"
 
-from app.models import User, Role
+from app.models import User, Role, Comment
 
 
 def create_app(config_name):

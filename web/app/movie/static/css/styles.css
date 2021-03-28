@@ -9,16 +9,12 @@ body {
   background-position: center;
   background-attachment: fixed;
   background-color: transparent;
-  border-radius: 0.25rem 0.25rem 0 0;
 }
 
 main.container,
-.movie-overview {
+.movie-overview,
+section.comments {
   background-color: whitesmoke;
-}
-
-main.container {
-  border-radius: 0.25rem 0.25rem 0 0;
 }
 
 .movie-overview {

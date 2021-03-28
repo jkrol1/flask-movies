@@ -1,11 +1,14 @@
 {% extends "base.html" %}
+{% from "_formutils.html" import render_field %}
+
+
 {% block styles %}
 <link rel="stylesheet" href="{{url_for('movie.static',filename='css/styles.css')}}">
 {% endblock %}
 
 {% block page_content %}
 <main class="container p-0">
-    <div class="movie-background mt-5"></div>
+    <div class="movie-background"></div>
     <div class="movie-overview container"></div>
     <h4 class="px-4 py-sm-4 mb-0 display-4">Actors</h4>
     <div class="movie-actors p-2 d-flex flex-nowrap align-items-center">
@@ -25,7 +28,20 @@
     </div>
     <h4 class="p-3 mb-0 display-4">Recommendations</h4>
     <div class="movie-recommendations px-2 d-flex flex-nowrap align-items-center"></div>
+    <section class="mt-3 comments container">
+        <h4 class="mb-0 display-4">Comments</h4>
+        <div class="px-4">
+            <form method="POST" class="mt-4">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    {{ render_field(form.body,class="form-control") }}
+                </div>
+                <button type="submit" class="btn btn-primary mt-1">Submit</button>
+            </form>
+        </div>
+    </section>
 </main>
+
 {% endblock %}
 
 {% block scripts %}

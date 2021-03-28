@@ -10,6 +10,9 @@ black = "*"
 click = "*"
 flask-wtf = "*"
 gunicorn = "*"
+flask-pagedown = "*"
+bleach = "*"
+markdown = "*"
 
 [dev-packages]
 

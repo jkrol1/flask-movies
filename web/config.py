@@ -15,6 +15,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     MAIL_SUBJECT_PREFIX = os.environ.get("MAIL_SUBJECT_PREFIX")
     MAIL_SENDER = os.environ.get("MAIL_SENDER")
+    COMMENTS_PER_PAGE = 10
 
 
 class DevelopmentConfig(Config):
