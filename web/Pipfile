@@ -13,6 +13,13 @@ gunicorn = "*"
 flask-pagedown = "*"
 bleach = "*"
 markdown = "*"
+flask-login = "*"
+flask-mail = "*"
+flask-migrate = "*"
+flask-moment = "*"
+python-dotenv = "*"
+email-validator = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

@@ -21,7 +21,7 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = (
-        "postgresql://postgres:postgres@localhost:5433/flask_movies"
+        "postgresql://postgres:postgres@localhost:5432/flask_movies"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
