@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_formutils.html" import render_field %}
+{% from "_pagination.html" import pagination_macro%}
 
 
 {% block styles %}
@@ -28,9 +29,8 @@
     </div>
     <h4 class="p-3 mb-0 display-4">Recommendations</h4>
     <div class="movie-recommendations px-2 d-flex flex-nowrap align-items-center"></div>
-    <section class="mt-3 comments container">
+    <section class="mt-3 comments container" id="comments">
         <h4 class="mb-0 display-4">Comments</h4>
-
         <form method="POST" class="mt-4">
             {{ form.csrf_token }}
             <div class="form-group">
@@ -38,8 +38,14 @@
             </div>
             <button type="submit" class="btn btn-primary mt-1">Submit</button>
         </form>
-
     </section>
+    {% if comments %}
+    {% for comment in comments %}
+    <div>{{ comment.body }}</div>
+    {% endfor %}
+    {% endif %}
+
+    {{pagination_macro(pagination,'movie.movie_page',movie_id=movie_id,fragment=comments)}}
 </main>
 
 {% endblock %}

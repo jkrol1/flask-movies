@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, current_app, request
 from flask_login import current_user
 
 from . import movie
@@ -9,6 +9,8 @@ from .. import db
 
 @movie.route("/<int:movie_id>", methods=["GET", "POST"])
 def movie_page(movie_id):
+
+    comments = Comment.query.filter_by(movie_id=movie_id)
 
     form = CommentForm()
 
@@ -24,4 +26,21 @@ def movie_page(movie_id):
 
         return redirect(url_for(".movie_page", movie_id=movie_id, page=-1))
 
-    return render_template("movie/movie.html", form=form)
+    page = request.args.get("page", 1, type=int)
+
+    if page == -1:
+        page = (comments.count() - 1) // current_app.config["COMMENTS_PER_PAGE"] + 1
+
+    pagination = comments.order_by(Comment.timestamp.asc()).paginate(
+        page, per_page=current_app.config["COMMENTS_PER_PAGE"], error_out=False
+    )
+
+    comments_on_page = pagination.items
+
+    return render_template(
+        "movie/movie.html",
+        form=form,
+        comments=comments_on_page,
+        pagination=pagination,
+        movie_id=movie_id,
+    )
