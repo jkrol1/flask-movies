@@ -88,7 +88,7 @@ const renderImages = images => {
 
 const createRecommendedMovieHtml = movie => (`<a href="/movie/${movie.id}" class="card m-2 shadow">
                                                     <img class="card-img-top" src="https://image.tmdb.org/t/p/w300/${movie.poster_path}" alt="Card image">
-                                                    <div class="card-body p-3 justify-content-center">
+                                                    <div class="card-body card-body-movie p-3 align-items-center d-flex justify-content-center align-items-center">
                                                         <h6 class="card-title text-center text-white m-0">${movie.title}</h5>
                                                     </div>
                                                 </a>`

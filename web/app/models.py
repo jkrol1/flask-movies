@@ -2,7 +2,7 @@ from datetime import datetime
 import hashlib
 
 import bleach
-from flask import current_app
+from flask import current_app, request
 from flask_login import UserMixin, AnonymousUserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from markdown import markdown
@@ -151,7 +151,7 @@ class User(db.Model, UserMixin):
             url = "https://secure.gravatar.com/avatar"
         else:
             url = "http://www.gravatar.com/avatar"
-        hash = self.avatar_hash() or self.gravatar_hash()
+        hash = self.avatar_hash or self.gravatar_hash()
 
         return "{url}/{hash}?s={size}&d={default}&r={rating}".format(
             url=url, hash=hash, size=size, default=default, rating=rating

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% from "_formutils.html" import render_field %}
-{% from "_pagination.html" import pagination_macro%}
+{% from "_pagination.html" import render_pagination%}
 
 
 {% block styles %}
@@ -8,28 +8,35 @@
 {% endblock %}
 
 {% block page_content %}
+<div class="movie-background"></div>
 <main class="container p-0">
-    <div class="movie-background"></div>
     <div class="movie-overview container"></div>
-    <h4 class="px-4 py-sm-4 mb-0 display-4">Actors</h4>
-    <div class="movie-actors p-2 d-flex flex-nowrap align-items-center">
-    </div>
-    <h4 class="px-4 py-3 py-sm-4 mb-0 display-4">Gallery</h4>
-    <div id="carousel-gallery" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
+    <section>
+        <h4 class="px-4 py-sm-4 mb-0 display-4">Actors</h4>
+        <a href="{{url_for('.movie_actors_list')}}"></a>
+        <div class="movie-actors p-2 d-flex flex-nowrap align-items-start">
         </div>
-        <a class="carousel-control-prev" href="#carousel-gallery" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carousel-gallery" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    <h4 class="p-3 mb-0 display-4">Recommendations</h4>
-    <div class="movie-recommendations px-2 d-flex flex-nowrap align-items-center"></div>
-    <section class="mt-3 comments container" id="comments">
+    </section>
+    <section>
+        <h4 class="px-4 py-3 py-sm-4 mb-0 display-4">Gallery</h4>
+        <div id="carousel-gallery" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+            </div>
+            <a class="carousel-control-prev" href="#carousel-gallery" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-gallery" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
+    <section>
+        <h4 class="px-3 py-4 mb-0 display-4">Recommendations</h4>
+        <div class="movie-recommendations px-2 d-flex flex-nowrap align-items-start"></div>
+    </section>
+    <div class="py-3 container" id="comment">
         <h4 class="mb-0 display-4">Comments</h4>
         <form method="POST" class="mt-4">
             {{ form.csrf_token }}
@@ -38,14 +45,29 @@
             </div>
             <button type="submit" class="btn btn-primary mt-1">Submit</button>
         </form>
-    </section>
+    </div>
     {% if comments %}
-    {% for comment in comments %}
-    <div>{{ comment.body }}</div>
-    {% endfor %}
+    <section id="comments" class="container my-4">
+        <div class='comments-container'>
+            {% for comment in comments %}
+            <div class="comment d-flex align-items-center p-1">
+                <img class="comment__avatar-img" src="{{ comment.author.gravatar(size=40) }}">
+                <div class='d-flex pl-2 flex-column'>
+                    <span class="comment__username">{{comment.author.username}}</span>
+                    <p class="comment__body my-0">{{ comment.body }}</p>
+                </div>
+                <div class="comment__date align-self-start ml-auto pr-2">{{
+                    moment(comment.timestamp).fromNow() }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
     {% endif %}
-
-    {{pagination_macro(pagination,'movie.movie_page',movie_id=movie_id,fragment=comments)}}
+    {% if pagination.pages > 0 %}
+    <div class="container d-flex justify-content-center pt-4">
+        {{render_pagination(pagination,'.movie_page',movie_id=movie_id,fragment='#comments')}}
+    </div>
+    {% endif %}
 </main>
 
 {% endblock %}

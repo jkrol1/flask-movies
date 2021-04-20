@@ -7,8 +7,8 @@ body {
   height: 35rem;
   background-repeat: no-repeat;
   background-position: center;
+  background-size: cover;
   background-attachment: fixed;
-  background-color: transparent;
 }
 
 main.container,
@@ -65,6 +65,10 @@ section.comments {
   background-color: black;
 }
 
+.card-body-movie{
+  min-height:5rem;
+}
+
 .card:hover {
   color: whitesmoke;
   text-decoration: none;
@@ -89,8 +93,36 @@ section.comments {
   object-fit: cover;
 }
 
-.display-4 {
-  font-size: 2.3rem;
+h4.display-4 {
+  font-size: 2.4rem;
+}
+
+.comments-container{
+  background-color:#fff;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+}
+
+.comments-container:last-child{
+  border-bottom: none;
+}
+
+.comment{
+  border-bottom: 1px solid #ced4da;
+}
+
+
+.comment__username{
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.comment__avatar-img{
+  border-radius: 50%;
+}
+
+.comment__date{
+  font-size: 0.8rem;
 }
 
 @media (min-width: 576px) {

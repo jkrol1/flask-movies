@@ -44,3 +44,8 @@ def movie_page(movie_id):
         pagination=pagination,
         movie_id=movie_id,
     )
+
+
+@movie.route("/<int:movie_id>/actors-list")
+def movie_actors_list(movie_id):
+    return render_template("movie/movie_actors_list.html")
