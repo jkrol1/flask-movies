@@ -97,6 +97,10 @@ h4.display-4 {
   font-size: 2.4rem;
 }
 
+.actors-list-link{
+  font-size: 1.3rem;
+}
+
 .comments-container{
   background-color:#fff;
   border: 1px solid #ced4da;

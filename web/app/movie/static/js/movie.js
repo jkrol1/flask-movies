@@ -13,6 +13,6 @@ const {
 
 renderView(
     movie,
-    actors.cast.slice(0, 10),
+    actors.cast,
     recommendations.results,
     images.backdrops);
