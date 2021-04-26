@@ -34,9 +34,11 @@ def create_app(config_name):
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint
     from .movie import movie as movie_blueprint
+    from .user_profile import user_profile as user_profile_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint, url_prefix="/auth")
     app.register_blueprint(movie_blueprint, url_prefix="/movie")
+    app.register_blueprint(user_profile_blueprint, url_prefix="/user-profile")
 
     return app
