@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, current_app, request
+from flask import render_template, redirect, url_for, current_app, request, abort
 from flask_login import current_user
 
 from . import movie
@@ -44,3 +44,15 @@ def movie_page(movie_id):
         pagination=pagination,
         movie_id=movie_id,
     )
+
+
+@movie.route("/<int:movie_id>/like/<event>")
+def like_event(movie_id, event):
+    if event == "like":
+        current_user.like_movie(movie_id)
+        return redirect(url_for(".movie_page", movie_id=movie_id))
+    elif event == "unlike":
+        current_user.unlike_movie(movie_id)
+        return redirect(url_for(".movie_page", movie_id=movie_id))
+    else:
+        abort(404)

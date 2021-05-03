@@ -51,6 +51,21 @@ section.comments {
   border: 3px solid var(--yellow);
 }
 
+
+.liked{
+  fill:var(--yellow);
+}
+
+.like, .liked{
+  transition: 0.2s;
+}
+
+.like:hover, .liked:hover{
+  transform: translateY(-0.5rem);
+}
+
+
+
 .card {
   flex-shrink: 0;
   width: 12rem;

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% from "_formutils.html" import render_field %}
+
+{%block page_content%}
+<main class="container">
+    <section class="mt-5">
+        <h1 class="display-4">Edit Your Profile</h1>
+        <form method="POST" class='login-form col-sm-10 col-lg-8 col-xl-7 mt-5'>
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ render_field(form.name,class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ render_field(form.location,class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ render_field(form.about_me,class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary mt-4">Submit</button>
+        </form>
+    </section>
+</main>
+{% endblock %}
+{% block scripts %}
+{{super()}}
+{% endblock %}

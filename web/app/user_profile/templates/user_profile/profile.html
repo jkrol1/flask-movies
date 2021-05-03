@@ -1,1 +1,29 @@
-<div>User: {{user_id}}</div>
+{% extends "base.html" %}
+
+{%block page_content%}
+<main class="container">
+    <div class="d-flex mt-5">
+        <img class="rounded shadow-sm" src="{{ user.gravatar(size=256) }}">
+        <div class="ml-5">
+            <p class="display-4 mb-4">{{user.username}}</p>
+            {%if user.name %} <p>Name: <span class="font-weight-bold">{{user.name}}</span></p> {% endif %}
+            {%if user.location %} <p>Location: <span class="font-weight-bold">{{user.location}}</span></p> {% endif %}
+            <p>Last seen: <span class="font-weight-bold">{{moment(user.last_seen).fromNow()}}</span></p>
+            {%if user.about_me %}<p>{{user.about_me}}</p>{% endif %}
+        </div>
+        {% if user == current_user %}
+        <div class="ml-auto">
+            <a class="btn btn-primary" href="{{url_for('.edit_profile')}}" role="button">Edit Profile</a>
+        </div>
+        {% endif %}
+    </div>
+    <section class="mt-5">
+        <h3 class="display-5 font-weight-normal">
+            Liked movies
+        </h3>
+        {% for like in current_user.liked_movies %}
+        <div>{{like.movie_id}}</div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

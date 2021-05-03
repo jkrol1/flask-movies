@@ -89,10 +89,15 @@ class User(db.Model, UserMixin):
     avatar_hash = db.Column(db.String(32))
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
+    last_seen = db.Column(db.DateTime)
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+    name = db.Column(db.String(64))
+    location = db.Column(db.String(64))
+    about_me = db.Column(db.Text())
     comments = db.relationship("Comment", backref="author", lazy="dynamic")
+    liked_movies = db.relationship("Like", backref="user", lazy="dynamic")
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -104,6 +109,30 @@ class User(db.Model, UserMixin):
 
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = self.gravatar_hash()
+
+    def ping(self):
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
+        db.session.commit()
+
+    def like_movie(self, movie_id):
+        if not self.has_liked_movie(movie_id):
+            like = Like(user_id=self.id, movie_id=movie_id)
+            db.session.add(like)
+            db.session.commit()
+
+    def unlike_movie(self, movie_id):
+        if self.has_liked_movie(movie_id):
+            Like.query.filter_by(user_id=self.id, movie_id=movie_id).delete()
+            db.session.commit()
+
+    def has_liked_movie(self, movie_id):
+        return (
+            Like.query.filter(
+                Like.user_id == self.id, Like.movie_id == movie_id
+            ).count()
+            > 0
+        )
 
     @property
     def password(self):
@@ -193,3 +222,10 @@ class Comment(db.Model):
 
 
 db.event.listen(Comment.body, "set", Comment.on_changed_body)
+
+
+class Like(db.Model):
+    __tablename__ = "likes"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    movie_id = db.Column(db.Integer)
