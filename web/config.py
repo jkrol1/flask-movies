@@ -14,7 +14,7 @@ class Config:
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     MAIL_SUBJECT_PREFIX = os.environ.get("MAIL_SUBJECT_PREFIX")
-    MAIL_SENDER = os.environ.get("MAIL_SENDER")
+    MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER")
     COMMENTS_PER_PAGE = 5
 
 

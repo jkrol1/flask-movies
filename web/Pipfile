@@ -20,6 +20,7 @@ flask-moment = "*"
 python-dotenv = "*"
 email-validator = "*"
 psycopg2-binary = "*"
+itsdangerous = "==2.0.1"
 
 [dev-packages]
 
