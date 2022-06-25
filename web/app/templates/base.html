@@ -28,14 +28,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
+                    {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        {% if current_user.is_authenticated %}
                         <a class="nav-link" href="{{url_for('user_profile.profile', username=current_user.username)}}">Profile</a>
-                        <a class="nav-link" href="{{url_for('auth.logout')}}">Logout</a>
-                        {% else %}
-                        <a class="nav-link" href="{{url_for('auth.login')}}">Login</a>
-                        {% endif %}
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('auth.logout')}}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('auth.login')}}">Login</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

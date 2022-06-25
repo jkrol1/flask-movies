@@ -9,7 +9,6 @@ from .. import db
 
 @movie.route("/<int:movie_id>", methods=["GET", "POST"])
 def movie_page(movie_id):
-
     comments = Comment.query.filter_by(movie_id=movie_id)
 
     form = CommentForm()
@@ -46,8 +45,8 @@ def movie_page(movie_id):
     )
 
 
-@movie.route("/<int:movie_id>/like/<event>")
-def like_event(movie_id, event):
+@movie.route("/<int:movie_id>/<event>")
+def like_movie(movie_id, event):
     if event == "like":
         current_user.like_movie(movie_id)
         return redirect(url_for(".movie_page", movie_id=movie_id))
