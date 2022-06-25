@@ -45,7 +45,7 @@ const renderMovieOverview = movie => {
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <div class="movie-vote-average"><span>${movie.vote_average}</span></div>
+                                        <div class="movie-vote-average"><span>${Math.round(movie.vote_average * 10) / 10}</span></div>
                                     </div>
                                 </div>`;
 

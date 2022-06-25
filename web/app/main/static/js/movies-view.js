@@ -71,7 +71,7 @@ class MoviesView {
                 <div class="card-body position-relative">
                     <h6 class="card-title">${movie.title}</h4>
                     <p class="card-text">${this._genreIdToText(movie.genre_ids, genresObj)}</p>
-                    <span class="movie-mark"><p class="my-0">${movie.vote_average}</p></span>
+                    <span class="movie-mark"><p class="my-0">${Math.round(movie.vote_average * 10) / 10}</p></span>
                 </div >
             </a >`
 
