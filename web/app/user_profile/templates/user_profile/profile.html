@@ -17,13 +17,5 @@
         </div>
         {% endif %}
     </div>
-    <section class="mt-5">
-        <h3 class="display-5 font-weight-normal">
-            Liked movies
-        </h3>
-        {% for like in current_user.liked_movies %}
-        <div>{{like.movie_id}}</div>
-        {% endfor %}
-    </section>
 </main>
 {% endblock %}
