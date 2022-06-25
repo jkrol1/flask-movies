@@ -8,14 +8,16 @@ html {
 }
 
 .navbar-brand,
-.nav-link {
+.nav-link,
+.dropdown-icon {
   color: var(--yellow);
   font-weight: 600;
   transition: 0.15s;
   font-size: 1.7rem;
 }
 
-.nav-link {
+.nav-link,
+.dropdown-icon{
   color: whitesmoke;
 }
 
@@ -24,12 +26,17 @@ html {
 }
 
 .navbar-brand:hover,
-.nav-link:hover {
+.nav-link:hover,
+.dropdown-icon:hover{
   color: var(--yellow);
 }
 
 .navbar-brand:hover {
   transform: translateY(-0.15rem);
+}
+
+.dropdown-toggle::after {
+    display: none;
 }
 
 .brand-name {

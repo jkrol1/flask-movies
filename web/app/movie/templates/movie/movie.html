@@ -76,7 +76,7 @@
             <div class="comment d-flex align-items-center p-1">
                 <img class="comment__avatar-img" src="{{ comment.author.gravatar(size=40) }}">
                 <div class='d-flex pl-2 flex-column'>
-                    <a href="{{url_for('user_profile.profile',username=comment.author.username)}}"
+                    <a href="{{url_for('user_profile.profile',user_id=comment.author.id)}}"
                        class="comment__username">{{comment.author.username}}</a>
                     <p class="comment__body my-0">{{ comment.body }}</p>
                 </div>

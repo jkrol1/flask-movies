@@ -7,17 +7,15 @@ from ..models import User
 from .. import db
 
 
-@user_profile.route("/<username>")
-def profile(username):
-
-    user = User.query.filter_by(username=username).first_or_404()
+@user_profile.route("/<int:user_id>")
+def profile(user_id):
+    user = User.query.filter_by(id=user_id).first_or_404()
 
     return render_template("user_profile/profile.html", user=user)
 
 
 @user_profile.route("/edit", methods=["GET", "POST"])
 def edit_profile():
-
     form = EditProfileForm()
 
     if form.validate_on_submit():
