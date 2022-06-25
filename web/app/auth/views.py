@@ -31,6 +31,29 @@ def login():
     return render_template("auth/login.html", form=form)
 
 
+@auth.route("/login-guest")
+def login_as_guest():
+    guest_user = User.query.filter_by(username="guest").first()
+
+    if not guest_user:
+        guest_user = User(
+            username="guest",
+            email="guest@guest.com",
+            password="passwordguest",
+            confirmed=True,
+            name="Guest",
+            location="somewhere in the universe",
+            about_me="I am just a Guest :)"
+        )
+
+        db.session.add(guest_user)
+        db.session.commit()
+
+    login_user(guest_user)
+
+    return redirect(url_for("main.index"))
+
+
 @auth.route("/logout")
 @login_required
 def logout():
@@ -81,14 +104,13 @@ def confirm(token):
 
 @auth.before_app_request
 def before_request():
-
     if current_user.is_authenticated:
         current_user.ping()
         if (
-            current_user.is_authenticated
-            and not current_user.confirmed
-            and request.blueprint != "auth"
-            and request.endpoint != "static"
+                current_user.is_authenticated
+                and not current_user.confirmed
+                and request.blueprint != "auth"
+                and request.endpoint != "static"
         ):
             return redirect(url_for("auth.unconfirmed"))
 
